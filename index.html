@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Sneha ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ================= GLOBAL STYLES ================= -->
+  <style>
+/* ===== index.css ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ffd1dc 0%, #ffe6ee 100%);
+  text-align: center;
+  color: #333;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ===== MusicPlayer.css ===== */
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border: 2px solid #e91e63;
+  color: #e91e63;
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  z-index: 1000;
+}
+
+/* ===== Hearts.css ===== */
+.hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heart {
+  position: absolute;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+/* ===== MessageCard.css ===== */
+.message {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+}
+
+.message h2 {
+  color: #e91e63;
+  font-size: 2rem;
+}
+
+.card-box {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 600px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* ===== Countdown.css ===== */
+.countdown {
+  margin-top: 20px;
+}
+
+.timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #e91e63;
+}
+
+.birthday-celebration {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-top: 30px;
+  background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* ===== Confetti.css ===== */
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+  </style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<button class="music-toggle" onclick="toggleMusic()">🎵 Music</button>
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_90c6fbbcd1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- HEARTS -->
+<div class="hearts" id="hearts"></div>
+
+<!-- MAIN MESSAGE -->
+<div class="message">
+  <h2>For Sneha ❤️</h2>
+
+  <div class="card-box">
+    <p>
+      Dear Sneha,<br><br>
+      From the moment you came into my life, everything felt warmer and brighter.
+      This small website is just a tiny reflection of how special you are to me.
+      <br><br>
+      — Yours, Keshav 💖
+    </p>
+
+    <div class="countdown">
+      <div class="timer" id="timer"></div>
+    </div>
+  </div>
+
+  <div class="birthday-celebration" id="celebrate" style="display:none;">
+    🎉 Happy Birthday Sneha 🎂
+  </div>
+</div>
+
+<script>
+/* ===== MUSIC ===== */
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  music.paused ? music.play() : music.pause();
+}
+
+/* ===== HEARTS ===== */
+const hearts = document.getElementById("hearts");
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  hearts.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+/* ===== COUNTDOWN ===== */
+const targetDate = new Date("2026-01-21T00:00:00").getTime();
+const timerEl = document.getElementById("timer");
+const celebrate = document.getElementById("celebrate");
+
+setInterval(() => {
+  const now = Date.now();
+  const diff = targetDate - now;
+
+  if (diff <= 0) {
+    timerEl.style.display = "none";
+    celebrate.style.display = "block";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  timerEl.innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
+}, 1000);
+</script>
+
+</body>
+</html>
